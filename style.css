@@ -1,0 +1,445 @@
+/* ==============================
+   VARIABLES & GLOBALS
+   ============================== */
+:root {
+    --bg-main: #f4f6fa;
+    --text-dark: #0f172a;
+    --text-gray: #64748b;
+    --primary-blue: #0062ff; /* The strong, bright blue */
+    --border-color: #b3c5e7; /* Soft grayish blue for borders */
+    
+    --font-main: 'Poppins', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-dark);
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+    /* Very subtle geometric pattern based on the image */
+    background-image: 
+      linear-gradient(45deg, rgba(0,0,0,0.01) 25%, transparent 25%),
+      linear-gradient(-45deg, rgba(0,0,0,0.01) 25%, transparent 25%);
+    background-size: 80px 80px;
+    background-position: 0 0, 0 40px, 40px -40px, -40px 0px;
+    animation: panBackground 30s linear infinite;
+}
+
+@keyframes panBackground {
+    0% {
+        background-position: 0 0, 0 40px, 40px -40px, -40px 0px;
+    }
+    100% {
+        background-position: 80px 80px, 80px 120px, 120px 40px, 40px 80px;
+    }
+}
+
+/* ==============================
+   LAYOUT
+   ============================== */
+.resume-wrapper {
+    display: flex;
+    max-width: 1600px; /* Expanded considerably from 1300px */
+    width: 96%; /* Takes up 96% of viewport to reduce side gaps */
+    margin: 0 auto;
+    min-height: 100vh;
+}
+
+.left-sidebar {
+    width: 400px; /* Increased from 350px for better split-screen ratio */
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.photo-container {
+    width: 100%;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    overflow: hidden;
+}
+
+.photo-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.contact-info-aside {
+    display: none; /* Hide on desktop, show on mobile if needed */
+}
+
+.right-content {
+    flex: 1;
+    padding: 6rem 5rem;
+    background: transparent;
+}
+
+/* ==============================
+   TYPOGRAPHY & SECTIONS
+   ============================== */
+.resume-section {
+    margin-bottom: 5rem;
+}
+
+.pb-large {
+    padding-bottom: 5rem;
+}
+
+.section-badge {
+    color: var(--primary-blue);
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.5rem;
+}
+
+.section-badge::before {
+    content: '';
+    display: block;
+    width: 10px;
+    height: 10px;
+    background-color: var(--primary-blue);
+}
+
+.section-title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--text-dark);
+    margin-bottom: 2.5rem;
+    letter-spacing: -0.5px;
+    text-transform: uppercase;
+}
+
+h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.2rem;
+    color: var(--text-dark);
+}
+
+p.subtitle {
+    color: var(--primary-blue);
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+p.desc {
+    color: var(--text-gray);
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+
+/* ==============================
+   GRID COMPONENT
+   ============================== */
+.card-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    background: transparent;
+}
+
+.grid-item {
+    position: relative;
+    padding: 3.5rem 2rem 2.5rem;
+    border-right: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* Removing borders for normal 2x2 grids */
+.card-grid .grid-item:nth-child(even) {
+    border-right: none;
+}
+.card-grid:not(.grid-1-only):not(.grid-2-only) .grid-item:nth-last-child(-n+2) {
+    border-bottom: none;
+}
+
+/* Specific grids */
+.grid-2-only .grid-item {
+    border-bottom: none;
+}
+
+.grid-1-only {
+    grid-template-columns: 1fr;
+}
+.grid-1-only .grid-item {
+    border-right: none;
+    border-bottom: none;
+    padding: 2.5rem;
+}
+
+/* Number Tabs */
+.card-number {
+    position: absolute;
+    top: -1px; /* Overlap border */
+    left: -1px; /* Overlap border */
+    background-color: var(--primary-blue);
+    color: white;
+    font-size: 1.4rem;
+    font-weight: 800;
+    padding: 0.4rem 1.2rem;
+    border-bottom-right-radius: 16px;
+    border-top-left-radius: 20px; /* match outer border if it's the first child, but we just use 0 normally */
+}
+
+/* Ensure outer corners of tabs match the grid border */
+.card-grid .grid-item:first-child .card-number {
+    border-top-left-radius: 20px;
+}
+.card-grid .grid-item:nth-child(2) .card-number {
+    border-top-left-radius: 0; 
+}
+
+
+/* ==============================
+   SKILLS COMPONENT
+   ============================== */
+.skill-item {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 2rem 2rem 2rem;
+    border-right: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.skill-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: white;
+    flex-shrink: 0;
+}
+
+.skill-icon img {
+    width: 25px;
+    height: 25px;
+}
+
+/* Adobe-like colors */
+.icon-ps { background: #001e36; color: #31a8ff; border: 2px solid #31a8ff; font-size: 1.2rem; }
+.icon-ai { background: #330000; color: #ff9a00; border: 2px solid #ff9a00; font-size: 1.2rem;}
+.icon-xd { background: #470137; color: #ff61f6; border: 2px solid #ff61f6; font-size: 1.2rem;}
+.icon-fg { background: #1e1e1e; }
+.icon-ae { background: #00005b; color: #9999ff; border: 2px solid #9999ff; font-size: 1.2rem;}
+.icon-bl { background: #e87d0d; }
+
+.skill-content {
+    flex: 1;
+}
+
+.skill-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.skill-name {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--text-dark);
+}
+
+.skill-percent {
+    font-weight: 600;
+    font-size: 0.8rem;
+    color: var(--text-gray);
+}
+
+.progress-bar {
+    width: 100%;
+    height: 4px;
+    background: #e2e8f0;
+    border-radius: 2px;
+    position: relative;
+}
+
+.progress {
+    height: 100%;
+    background: var(--primary-blue);
+    border-radius: 2px;
+}
+
+/* ==============================
+   INTERESTS
+   ============================== */
+.interests-list {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    color: var(--text-dark);
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.interests-list .sep {
+    color: var(--border-color);
+    font-weight: 300;
+}
+
+/* ==============================
+   RESPONSIVE DESIGN
+   ============================== */
+@media (max-width: 1024px) {
+    .resume-wrapper {
+        flex-direction: column;
+    }
+    
+    .left-sidebar {
+        width: 100%;
+        height: auto;
+    }
+    
+    .photo-container {
+        height: 400px;
+        position: relative;
+    }
+    
+    .right-content {
+        padding: 4rem 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .card-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .grid-item, .skill-item {
+        border-right: none !important;
+        border-bottom: 1px solid var(--border-color) !important;
+    }
+    
+    .card-grid .grid-item:last-child {
+        border-bottom: none !important;
+    }
+    
+    .card-grid .grid-item:first-child .card-number,
+    .card-grid .grid-item:nth-child(2) .card-number {
+        border-top-left-radius: 0; /* Reset for mobile */
+    }
+    
+    .card-grid .grid-item:first-child .card-number {
+        border-top-left-radius: 18px; /* Apply to very first only */
+    }
+}
+
+/* ==============================
+   HERO / TYPEWRITER
+   ============================== */
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+    color: var(--text-dark);
+}
+.typewriter-container {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-gray);
+    margin-bottom: 1.5rem;
+}
+.hero-desc {
+    max-width: 700px;
+    font-size: 1.05rem;
+    line-height: 1.8;
+}
+.cursor {
+    display: inline-block;
+    width: 3px;
+    background-color: var(--primary-blue);
+    animation: blink 1s infinite;
+}
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+.mt-3 {
+    margin-top: 1.5rem;
+}
+
+/* ==============================
+   LANGUAGE TOGGLE
+   ============================== */
+.lang-toggle {
+    position: fixed;
+    top: 2.5rem;
+    right: 3rem;
+    z-index: 1000;
+    display: flex;
+    background: rgba(255,255,255,0.7);
+    backdrop-filter: blur(12px);
+    border-radius: 30px;
+    padding: 0.3rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    border: 1px solid var(--border-color);
+}
+
+.lang-toggle a {
+    text-decoration: none;
+    padding: 0.5rem 1.2rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-gray);
+    transition: all 0.3s ease;
+}
+
+.lang-toggle a.active {
+    background: var(--primary-blue);
+    color: #fff;
+    box-shadow: 0 2px 10px rgba(0, 98, 255, 0.2);
+}
+
+.lang-toggle a:hover:not(.active) {
+    color: var(--primary-blue);
+    background: rgba(0, 98, 255, 0.05);
+}
+
+@media (max-width: 768px) {
+    .lang-toggle {
+        top: 1.5rem;
+        right: 1.5rem;
+    }
+}
+
+/* ==============================
+   SCROLL REVEAL ANIMATIONS
+   ============================== */
+.reveal {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
