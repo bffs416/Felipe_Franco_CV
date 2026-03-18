@@ -475,7 +475,7 @@ p.desc {
     border-radius: 3px;
 }
 
-.h-carousel img {
+.h-carousel img, .h-carousel video {
     scroll-snap-align: start;
     flex: 0 0 auto;
     height: 180px;
