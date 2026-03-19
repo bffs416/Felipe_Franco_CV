@@ -18,16 +18,8 @@ window.addEventListener("scroll", reveal);
 reveal();
 
 
-// ========== STICKY NAVBAR ==========
-const navbar = document.querySelector('.navbar');
+// (Navbar logic removed as no .navbar exists in HTML)
 
-window.addEventListener('scroll', () => {
-    if (window.scrollY > 40) {
-        navbar.classList.add('scrolled');
-    } else {
-        navbar.classList.remove('scrolled');
-    }
-});
 
 
 // ========== TYPEWRITER EFFECT ==========
@@ -36,8 +28,8 @@ const cursorSpan = document.querySelector(".cursor");
 
 const isEnglish = document.documentElement.lang === "en" || document.body.classList.contains("lang-en");
 const textArray = isEnglish 
-    ? ["Sales Specialist", "Product Director", "B2B Expert", "Surgical Technologist"]
-    : ["Especialista de Ventas", "Director de Producto", "Experto B2B", "Instrumentador Quirúrgico"];
+    ? ["Training Manager", "Product Director", "B2B Expert", "Surgical Technologist"]
+    : ["Gerente de Entrenamiento", "Director de Producto", "Experto B2B", "Instrumentador Quirúrgico"];
 
 const typingDelay = 100;
 const erasingDelay = 50;
@@ -74,5 +66,5 @@ function erase() {
 }
 
 document.addEventListener("DOMContentLoaded", function() { // On DOM Load initiate the effect
-  if(textArray.length) setTimeout(type, newTextDelay + 250);
+  if(textArray.length) setTimeout(type, 500); // Shorter delay for better feel
 });
